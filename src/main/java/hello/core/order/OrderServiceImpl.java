@@ -3,14 +3,25 @@ package hello.core.order;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService{
 
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
+
+    // 생성자 주입
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+//        System.out.println("constructor memberRepository = " + memberRepository);
+//        System.out.println("constructor discountPolicy = " + discountPolicy);
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = discountPolicy;
+//    }
 
     // 필드주입 테스트하기 힘들어서 추천안함
     // 테스트코드에서는 사용해도 괜춘
@@ -39,16 +50,6 @@ public class OrderServiceImpl implements OrderService{
 //        this.memberRepository = memberRepository;
 //        this.discountPolicy = discountPolicy;
 //    }
-
-    @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        System.out.println("constructor memberRepository = " + memberRepository);
-        System.out.println("constructor discountPolicy = " + discountPolicy);
-        this.memberRepository = memberRepository;
-        this.discountPolicy = discountPolicy;
-    }
-    // 생성자 주입
-
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
