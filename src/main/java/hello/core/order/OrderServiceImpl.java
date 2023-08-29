@@ -5,23 +5,26 @@ import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
+//@RequiredArgsConstructor //롬복 어노테이션 final로 선언된 변수들을 생성자함수로 의존성 주입을 시켜줌
 public class OrderServiceImpl implements OrderService{
 
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
-    // 생성자 주입
 //    @Autowired
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        System.out.println("constructor memberRepository = " + memberRepository);
-//        System.out.println("constructor discountPolicy = " + discountPolicy);
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+//    private DiscountPolicy rateDiscountPolicy;
+    // 생성자 주입
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository,/* @Qualifier("mainDiscountPolicy") */ DiscountPolicy discountPolicy /* DiscountPolicy rateDiscountPolicy*/) {
+        System.out.println("constructor memberRepository = " + memberRepository);
+        System.out.println("constructor discountPolicy = " + discountPolicy);
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     // 필드주입 테스트하기 힘들어서 추천안함
     // 테스트코드에서는 사용해도 괜춘
